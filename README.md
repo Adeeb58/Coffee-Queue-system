@@ -2,8 +2,6 @@
 
 A full-stack implementation of a coffee shop queue management system, designed to handle high concurrency, real-time updates, and intelligent order assignment.
 
-![Simulation Dashboard](https://raw.githubusercontent.com/Adeeb58/Coffee-Queue-system/main/media/simulation_dashboard.png)
-
 ## 🚀 Overview
 
 The **Barista Queue System** is a robust application that manages coffee orders, assigns them to baristas based on workload, and tracks metrics in real-time. It features a dual-interface design:
