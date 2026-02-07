@@ -47,10 +47,5 @@ export interface DrinkMenuItem {
     price: number;
 }
 
-export interface QueueStats {
-    totalPending: number;
-    totalInProgress: number;
-    totalCompleted: number;
-    averageWaitTime: number;
-    emergencyOrders: number;
+emergencyOrders: number;
 }

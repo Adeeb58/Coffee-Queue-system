@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import CustomerInterface from './components/CustomerInterface';
 import BaristaDashboard from './components/BaristaDashboard';
-import { Coffee, Users, BarChart3 } from 'lucide-react';
+import SimulationDashboard from './components/SimulationDashboard';
+import { Coffee, Users, Activity } from 'lucide-react';
 
-type View = 'customer' | 'barista' | 'analytics';
+type View = 'customer' | 'barista' | 'simulation';
 
 function App() {
     const [currentView, setCurrentView] = useState<View>('customer');
@@ -22,8 +23,8 @@ function App() {
                             <button
                                 onClick={() => setCurrentView('customer')}
                                 className={`px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors ${currentView === 'customer'
-                                    ? 'bg-white text-primary'
-                                    : 'hover:bg-secondary'
+                                        ? 'bg-white text-primary'
+                                        : 'hover:bg-secondary'
                                     }`}
                             >
                                 <Coffee className="w-5 h-5" />
@@ -32,12 +33,22 @@ function App() {
                             <button
                                 onClick={() => setCurrentView('barista')}
                                 className={`px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors ${currentView === 'barista'
-                                    ? 'bg-white text-primary'
-                                    : 'hover:bg-secondary'
+                                        ? 'bg-white text-primary'
+                                        : 'hover:bg-secondary'
                                     }`}
                             >
                                 <Users className="w-5 h-5" />
                                 <span>Barista</span>
+                            </button>
+                            <button
+                                onClick={() => setCurrentView('simulation')}
+                                className={`px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors ${currentView === 'simulation'
+                                        ? 'bg-white text-primary'
+                                        : 'hover:bg-secondary'
+                                    }`}
+                            >
+                                <Activity className="w-5 h-5" />
+                                <span>Test Simulation</span>
                             </button>
                         </div>
                     </div>
@@ -48,6 +59,7 @@ function App() {
             <div>
                 {currentView === 'customer' && <CustomerInterface />}
                 {currentView === 'barista' && <BaristaDashboard />}
+                {currentView === 'simulation' && <SimulationDashboard />}
             </div>
         </div>
     );

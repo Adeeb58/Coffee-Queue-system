@@ -3,6 +3,7 @@ package com.beanbrewcafe.barista.service;
 import com.beanbrewcafe.barista.model.Customer;
 import com.beanbrewcafe.barista.model.Drink;
 import com.beanbrewcafe.barista.model.Order;
+
 import com.beanbrewcafe.barista.repository.CustomerRepository;
 import com.beanbrewcafe.barista.repository.DrinkRepository;
 import com.beanbrewcafe.barista.repository.OrderRepository;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -130,7 +132,7 @@ public class OrderService {
      * Generate unique order number
      */
     private String generateOrderNumber() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        return "ORD" + LocalDateTime.now().format(formatter);
+        return "ORD" + System.currentTimeMillis() + String.format("%04d", new Random().nextInt(10000));
     }
+
 }

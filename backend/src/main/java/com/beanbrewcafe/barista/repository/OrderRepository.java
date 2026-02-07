@@ -40,4 +40,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Long countTimeoutOrders(LocalDateTime startTime);
 
     List<Order> findByBaristaIdAndStatus(Long baristaId, Order.OrderStatus status);
+
+    // Test order filtering
+    List<Order> findByIsTestOrder(Boolean isTestOrder);
+
+    List<Order> findByStatusAndIsTestOrder(Order.OrderStatus status, Boolean isTestOrder);
+
+    List<Order> findByBaristaIdAndStatusAndIsTestOrder(Long baristaId, Order.OrderStatus status, Boolean isTestOrder);
+
+    Optional<Order> findTopByBaristaAndStatus(com.beanbrewcafe.barista.model.Barista barista, Order.OrderStatus status);
 }

@@ -62,6 +62,9 @@ public class Order {
     @Column(name = "emergency_flag")
     private boolean emergencyFlag = false;
 
+    @Column(name = "is_test_order")
+    private Boolean isTestOrder = false;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -95,7 +98,9 @@ public class Order {
         double score = 0.0;
 
         // 1. Wait Time Component (40% weight)
-        long waitMinutes = ChronoUnit.MINUTES.between(orderTime, LocalDateTime.now());
+        long waitMinutes = Math.max(
+                ChronoUnit.MINUTES.between(orderTime, LocalDateTime.now()),
+                0);
         double waitScore = Math.min(waitMinutes * 4.0, 40.0); // Max 40 points
         score += waitScore;
 
@@ -147,9 +152,15 @@ public class Order {
 
     public Integer getCurrentWaitMinutes() {
         if (waitTimeMinutes != null) {
-            return waitTimeMinutes;
+            return Math.max(waitTimeMinutes, 0);
         }
-        return (int) ChronoUnit.MINUTES.between(orderTime, LocalDateTime.now());
+
+        if (orderTime == null) {
+            return 0;
+        }
+
+        long minutes = ChronoUnit.MINUTES.between(orderTime, LocalDateTime.now());
+        return (int) Math.max(minutes, 0);
     }
 
     /**

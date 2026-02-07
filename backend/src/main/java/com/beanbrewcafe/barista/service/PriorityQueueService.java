@@ -257,4 +257,17 @@ public class PriorityQueueService {
 
     public record QueueStats(int totalPending, int avgWaitTime, int maxWaitTime, int emergencyCount) {
     }
+
+    /**
+     * Simulation helper: Assign orders to all available baristas
+     */
+    @Transactional
+    public void assignOrdersToAvailableBaristas() {
+        List<Barista> baristas = baristaRepository.findAll();
+        for (Barista barista : baristas) {
+            if (barista.getStatus() == Barista.BaristaStatus.AVAILABLE) {
+                assignNextOrder(barista.getId());
+            }
+        }
+    }
 }
