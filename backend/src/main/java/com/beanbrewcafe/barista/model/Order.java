@@ -60,7 +60,7 @@ public class Order {
     private Integer skippedCount = 0;
 
     @Column(name = "emergency_flag")
-    private Boolean emergencyFlag = false;
+    private boolean emergencyFlag = false;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -141,14 +141,21 @@ public class Order {
     /**
      * Get current wait time in minutes
      */
+    public void setCurrentWaitMinutes(Integer minutes) {
+        this.waitTimeMinutes = minutes;
+    }
+
     public Integer getCurrentWaitMinutes() {
+        if (waitTimeMinutes != null) {
+            return waitTimeMinutes;
+        }
         return (int) ChronoUnit.MINUTES.between(orderTime, LocalDateTime.now());
     }
 
     /**
      * Get total preparation time for this order
      */
-    public Integer getTotalPrepTime() {
+    public Integer getEstimatedPrepTime() {
         return drink.getPrepTime() * quantity;
     }
 

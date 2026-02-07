@@ -28,9 +28,9 @@ public class OrderResponse {
         response.setStatus(order.getStatus().name());
         response.setPriorityScore(order.getPriorityScore());
         response.setCurrentWaitMinutes(order.getCurrentWaitMinutes());
-        response.setEmergencyFlag(order.getEmergencyFlag());
+        response.setEmergencyFlag(order.isEmergencyFlag());
         response.setOrderTime(order.getOrderTime());
-        response.setEstimatedPrepTime(order.getTotalPrepTime());
+        response.setEstimatedPrepTime(order.getEstimatedPrepTime());
 
         if (order.getBarista() != null) {
             response.setBaristaName(order.getBarista().getName());

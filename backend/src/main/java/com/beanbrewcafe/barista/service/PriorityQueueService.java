@@ -112,7 +112,7 @@ public class PriorityQueueService {
 
             // Update barista workload
             barista.setCurrentWorkload(
-                    barista.getCurrentWorkload() + selectedOrder.getTotalPrepTime());
+                    barista.getCurrentWorkload() + selectedOrder.getEstimatedPrepTime());
             barista.setStatus(Barista.BaristaStatus.BUSY);
 
             // Update skip counts for other orders (fairness tracking)
@@ -123,7 +123,7 @@ public class PriorityQueueService {
 
             log.info("Assigned order {} to barista {} (priority: {}, prep time: {} min)",
                     selectedOrder.getOrderNumber(), barista.getName(),
-                    selectedOrder.getPriorityScore(), selectedOrder.getTotalPrepTime());
+                    selectedOrder.getPriorityScore(), selectedOrder.getEstimatedPrepTime());
 
             return Optional.of(selectedOrder);
         }
@@ -145,7 +145,7 @@ public class PriorityQueueService {
 
         // RULE 1: Emergency orders get top priority regardless of workload
         for (Order order : orders) {
-            if (order.getEmergencyFlag()) {
+            if (order.isEmergencyFlag()) {
                 return order;
             }
         }
@@ -156,7 +156,7 @@ public class PriorityQueueService {
                     barista.getName(), String.format("%.2f", workloadRatio));
 
             for (Order order : orders) {
-                if (order.getTotalPrepTime() <= 2) { // Quick orders (1-2 min)
+                if (order.getEstimatedPrepTime() <= 2) { // Quick orders (1-2 min)
                     return order;
                 }
             }
@@ -216,7 +216,7 @@ public class PriorityQueueService {
         // Update barista
         if (barista != null) {
             barista.setCurrentWorkload(
-                    Math.max(0, barista.getCurrentWorkload() - order.getTotalPrepTime()));
+                    Math.max(0, barista.getCurrentWorkload() - order.getEstimatedPrepTime()));
             barista.setTotalOrdersServed(barista.getTotalOrdersServed() + 1);
 
             // Check if barista has more work

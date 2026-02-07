@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -13,6 +14,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByStatus(Order.OrderStatus status);
 
     List<Order> findByStatusOrderByPriorityScoreDesc(Order.OrderStatus status);
+
+    Optional<Order> findTopByStatusOrderByPriorityScoreDesc(Order.OrderStatus status);
+
+    Optional<Order> findByBarista_NameAndStatus(String baristaName, Order.OrderStatus status);
+
+    Optional<Order> findByBaristaAndStatus(com.beanbrewcafe.barista.model.Barista barista, Order.OrderStatus status);
 
     @Query("SELECT o FROM Order o WHERE o.status = 'PENDING' ORDER BY o.priorityScore DESC, o.orderTime ASC")
     List<Order> findPendingOrdersByPriority();
